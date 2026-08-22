@@ -35,20 +35,4 @@ A Python-based network diagnostics application that monitors host connectivity, 
 
 ## Example Output
 
-NETWORK MONITORING & SYSTEM DIAGNOSTICS
-
-Host : google.com
-
-IP : 142.xxx.xxx.xxx
-
-Status : Reachable
-
-22 SSH CLOSED
-
-80 HTTP OPEN
-
-443 HTTPS OPEN
-
-## Example Output
-
 ![Network Monitor Output](screenshots/network_monitor_output.png)
