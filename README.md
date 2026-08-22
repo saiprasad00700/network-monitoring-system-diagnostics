@@ -17,6 +17,15 @@ A Python-based network diagnostics application that monitors host connectivity, 
 - Subprocess
 - Linux / Windows Networking
 
+## Skills Demonstrated
+
+- DNS Resolution using Python Socket
+- Host Availability Testing (Ping)
+- TCP Port Scanning
+- Socket Programming
+- Network Diagnostics
+- Linux / Windows Command Integration
+
 ## Ports Scanned
 
 | Port | Service |
