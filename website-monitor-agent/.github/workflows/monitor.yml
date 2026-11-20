@@ -1,0 +1,31 @@
+name: Website Monitor Agent
+
+on:
+  schedule:
+    # Every 20 minutes (UTC). GitHub scheduled runs can be delayed during busy periods.
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run monitoring agent
+        env:
+          WEBSITE_A_URL: ${{ secrets.WEBSITE_A_URL }}
+          WEBSITE_B_URL: ${{ secrets.WEBSITE_B_URL }}
+          SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
+          SMTP_APP_PASSWORD: ${{ secrets.SMTP_APP_PASSWORD }}
+          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
+          CHECK_TIMEOUT_SECONDS: '15'
+        run: python website-monitor-agent/monitor.py
