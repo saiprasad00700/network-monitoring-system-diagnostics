@@ -26,6 +26,14 @@ def check_site(url: str):
     try:
         with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
             code = response.status
+            raw_body = response.read()
+            body = raw_body.decode("utf-8", errors="replace")
+            # Detect SS AUCTION's user-facing outage page even when the server
+            # returns HTTP 200. Normalize case and whitespace before matching.
+            normalized = " ".join(body.lower().split())
+            outage_phrase = "ss auction is temporarily unavailable"
+            if outage_phrase in normalized:
+                return False, f"HTTP {code} — SS AUCTION temporary-unavailable message detected"
             return (200 <= code < 400), f"HTTP {code}"
     except urllib.error.HTTPError as exc:
         # HTTP errors are failures, but report their status explicitly.
