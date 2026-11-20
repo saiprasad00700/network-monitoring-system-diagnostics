@@ -11,8 +11,8 @@ from email.message import EmailMessage
 from datetime import datetime, timezone
 
 TIMEOUT = int(os.getenv("CHECK_TIMEOUT_SECONDS", "15"))
-A_URL = os.getenv("WEBSITE_A_URL", "").strip()
-B_URL = os.getenv("WEBSITE_B_URL", "").strip()
+A_URL = os.getenv("WEBSITE_A_URL", "https://ss-auction-server-3.onrender.com/").strip()
+B_URL = os.getenv("WEBSITE_B_URL", "https://ss-auction-server-2.onrender.com/").strip()
 
 
 def check_site(url: str):
@@ -53,8 +53,12 @@ def send_alert(subject: str, body: str):
 
 def main():
     if not A_URL or not B_URL:
-        print("ERROR: WEBSITE_A_URL and WEBSITE_B_URL must be configured.")
+        print("ERROR: Website URLs are empty. Set WEBSITE_A_URL and WEBSITE_B_URL, or use the built-in SS AUCTION defaults.")
         sys.exit(2)
+    for label, url in (("WEBSITE_A_URL", A_URL), ("WEBSITE_B_URL", B_URL)):
+        if not url.startswith(("http://", "https://")):
+            print(f"ERROR: {label} must start with http:// or https:// (configured value is invalid).")
+            sys.exit(2)
 
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     print(f"Monitor run started at {timestamp}")
