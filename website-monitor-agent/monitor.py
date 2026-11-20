@@ -7,6 +7,8 @@ import time
 import smtplib
 import urllib.request
 import urllib.error
+import re
+from html import unescape
 from email.message import EmailMessage
 from datetime import datetime, timezone
 
@@ -30,7 +32,7 @@ def check_site(url: str):
             body = raw_body.decode("utf-8", errors="replace")
             # Detect SS AUCTION's user-facing outage page even when the server
             # returns HTTP 200. Normalize case and whitespace before matching.
-            normalized = " ".join(body.lower().split())
+            normalized = " ".join(unescape(re.sub(r"<[^>]+>", " ", body)).lower().split())
             outage_phrase = "ss auction is temporarily unavailable"
             if outage_phrase in normalized:
                 return False, f"HTTP {code} — SS AUCTION temporary-unavailable message detected"
