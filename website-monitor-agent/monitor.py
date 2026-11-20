@@ -11,8 +11,8 @@ from email.message import EmailMessage
 from datetime import datetime, timezone
 
 TIMEOUT = int(os.getenv("CHECK_TIMEOUT_SECONDS", "15"))
-A_URL = os.getenv("WEBSITE_A_URL", "https://ss-auction-server-3.onrender.com/").strip()
-B_URL = os.getenv("WEBSITE_B_URL", "https://ss-auction-server-2.onrender.com/").strip()
+A_URL = os.getenv("WEBSITE_A_URL", "").strip()
+B_URL = os.getenv("WEBSITE_B_URL", "").strip()
 
 
 def check_site(url: str):
